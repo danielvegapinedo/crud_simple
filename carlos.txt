@@ -1,7 +1,5 @@
 Desde carlos
-<<<<<<< HEAD
 desde daniel window
 modfy daniel
-=======
 insertado en carlos
->>>>>>> 7aa6e21c8be3d4bc7bdfb61957182fb736250a03
+
