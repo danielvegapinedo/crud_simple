@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create account page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="./css/formStyle10.css">
+        <script src="js/util.js"></script>
+        <script>
+            var fullname, address, email, phone, password1, password2, agree, submit, textInputList, requiredList;
+
+            function init() {
+                fullname = document.getElementById("fullname");
+                address = document.getElementById("address");
+                email = document.getElementById("email");
+                phone = document.getElementById("phone");
+                password1 = document.getElementById("password1");
+                password2 = document.getElementById("password2");
+                submit = document.getElementById("submit");
+                agree = document.getElementById("agree");
+
+                textInputList = [fullname, address, email, phone, password1, password2];
+                requiredList = [fullname, email, password1, password2, agree];
+
+                submit.onclick = validate;
+                cleanTextInput();
+
+            }
+
+            function cleanTextInput() {
+                for (var i = 0; i < textInputList.length; i++) {
+                    textInputList[i].value = "";
+                }
+                agree.checked = false;
+            }
+
+            function validate() {
+                for (var i = 0; i < requiredList.length; i++) {
+                    var cmp = requiredList[i];
+                    if (cmp.tagName === "INPUT" && cmp.type === "text" || cmp.type === "password") {
+                        cmp.value = cmp.value.trim();
+                        if (cmp.value.length === 0) {
+                            alert("The field " + cmp.name + " is required.");
+                            return;
+                        }
+                    }
+                }
+
+                if (!agree.checked) {
+                    alert("The field agree must be checked.");
+                    return;
+                }
+
+                if (password1.value !== password2.value) {
+                    alert("The passwords don't match!");
+                    return;
+                }
+
+                setCookie("email", email.value, 1000);
+                setCookie("password", password1.value, 1000);
+                
+                window.location = "grid_device.jsp";
+            }
+
+
+            window.onload = init;
+
+        </script>
+    </head>
+    <body>
+        <div class="form-style-10">
+            <h1>Sign Up Now!<span>Sign up and tell us what you think of the site!</span></h1>
+            <form novalidate>
+                <div class="section"><span>1</span>First Name &amp; Address</div>
+                <div class="inner-wrap">
+                    <label>Your Full Name <span class="required">*</span><input type="text" name="fullname" id="fullname" /></label>
+                    <label>Address <textarea name="address" id="address"></textarea></label>
+                </div>
+
+                <div class="section"><span>2</span>Email &amp; Phone</div>
+                <div class="inner-wrap">
+                    <label>Email Address  <span class="required">*</span><input type="text" name="email" id="email" /></label>
+                    <label>Phone Number <input type="text" name="phone" id="phone" /></label>
+                </div>
+
+                <div class="section"><span>3</span>Passwords</div>
+                <div class="inner-wrap">
+                    <label>Password  <span class="required">*</span><input type="password" name="password1" id="password1" /></label>
+                    <label>Confirm Password  <span class="required">*</span><input type="password" name="password2" id="password2" /></label>
+                </div>
+                <div class="button-section">
+                    <input id="submit" type="button" value="Submit"/>
+                    <span class="privacy-policy">
+                        <input type="checkbox" name="agree" id="agree">You agree to our Terms and Policy.  <span class="required">*</span>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
